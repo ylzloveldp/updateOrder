@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>order form</title>
+	<script type="text/javascript">
+	//获取订单生产当日时间
+	function getTime() {
+		var today=new Date();
+		var y=today.getFullYear();
+		var m=today.getMonth()+1;
+		var d=today.getDate();
+		m=checkTime(m);
+		d=checkTime(d);
+		var x=document.getElementById("time2");
+		x.innerHTML=y+""+m+""+d+"";
+	}
+	function checkTime(i){
+		if(i<10){
+			i="0"+i;
+		}
+		return i;
+	}
+//初始化cookie
+function setCookie(name,value)
+	{
+		document.cookie=name+"="+escape(value);
+	}
+	//获取cookie
+	function getCookie(name)
+	{
+		var arr=document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+		if(arr!=null)
+			return unescape(arr[2]);
+		return null;
+	}
+	//更新cookie的值，并读取其值
+function countUpdate()
+{
+	
+	if(getCookie("ylz"))
+	{
+		var cookieValue=parseInt(getCookie('ylz'))+1;
+		setCookie("ylz",cookieValue);
+	}
+	else
+	{
+		setCookie("ylz","1");
+		cookieValue=1;
+	}
+	return cookieValue;
+}
+//输入更新的末尾订单号
+function inputCount()
+{
+	var inputCookie=countUpdate();
+	document.getElementById("nums").innerHTML=inputCookie;
+}
+//获取订单的英文编号
+function getIndex(){
+	var myselect=document.getElementById("ordernum");
+	var index=myselect.selectedIndex;
+	var text1=myselect.options[index].text;
+	document.getElementById("or").innerHTML=text1;
+}
+        /*function countUpdate()
+        {
+			if(!document.cookie)
+		 {
+			document.cookie=1;
+			var cookieValue=document.cookie;
+		 }
+			else
+			{
+				var cookieValue=escape(document.cookie);
+			 	cookieValue=cookieValue+1;
+			 	document.cookie=cookieValue;
+		}
+	document.getElementById("nums").innerHTML=cookieValue;
+		}
+		*/
+</script>
+</head>
+<body onload="getIndex();getTime();inputCount()">
+<style type="text/css">
+	select{float:left;}
+	#time2 {float:left;
+		margin-left:1px;
+	}
+	#or {float:left;
+		margin-left:5px;
+	}
+	#nums {float:left;
+		margin-left:1px;
+	}
+	#bh {float:left;
+		margin-left:5px;
+	}
+	.clear{clear:both;}
+</style>
+<div>
+<select id="ordernum" style="margin-top:16px;">
+	<option value="ab">ab</option>
+	<option value="cd">cd</option>
+	<option value="ef">ef</option>
+	<option value="gh">gh</option>
+</select>
+</div>
+<p class="clear"></p>
+<p id="bh">订单编号：</p>
+<p id="or"></p>
+<p id="time2"></p>
+<p id="nums"></p>
+<p class="clear"></p>
+<!--<input type="button" onclick="getIndex();getTime()" value="生成订单编号">-->
+</body>
+</html>
